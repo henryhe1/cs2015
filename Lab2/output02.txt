@@ -1,0 +1,227 @@
+2+3*7
+
+ans =
+
+    23
+
+(2+3)*7
+
+ans =
+
+    35
+
+2+(3*7)
+
+ans =
+
+    23
+
+t=5;
+t=t+1
+
+t =
+
+     6
+
+5*t
+
+ans =
+
+    30
+
+1/(2+3^2)+4/5*(6/7)
+
+ans =
+
+    0.7766
+
+1/2+3^2+4/5*6/7
+
+ans =
+
+   10.1857
+
+x=22/7;
+format short
+x
+
+x =
+
+    3.1429
+
+format long
+x
+
+x =
+
+   3.142857142857143
+
+format
+a=7; b=cos(a), c=cosh(a)
+
+b =
+
+    0.7539
+
+
+c =
+
+  548.3170
+
+a
+
+a =
+
+     7
+
+a = 5; x = 2; y = 8;
+y = exp(-a)*sin(x)+10*sqrt(y)
+
+y =
+
+   28.2904
+
+log(142)
+
+ans =
+
+    4.9558
+
+log10(142)
+
+ans =
+
+    2.1523
+
+sin(pi/4)
+
+ans =
+
+    0.7071
+
+exp(10)
+
+ans =
+
+   2.2026e+04
+
+10*sin(19*pi/200)*exp(10^(-0.1))
+
+ans =
+
+    6.5070
+
+sin(magic(3))
+
+ans =
+
+    0.9894    0.8415   -0.2794
+    0.1411   -0.9589    0.6570
+   -0.7568    0.4121    0.9093
+
+% Complex number and arithmetic
+z = 2.3 - 5.2*i
+
+z =
+
+   2.3000 - 5.2000i
+
+ceil(z)
+
+ans =
+
+   3.0000 - 5.0000i
+
+floor(z)
+
+ans =
+
+   2.0000 - 6.0000i
+
+round(z)
+
+ans =
+
+   2.0000 - 5.0000i
+
+fix(z)
+
+ans =
+
+   2.0000 - 5.0000i
+
+real(z)
+
+ans =
+
+    2.3000
+
+imag(z)
+
+ans =
+
+   -5.2000
+
+abs(z)
+
+ans =
+
+    5.6859
+
+sqrt(2345.676)
+
+ans =
+
+   48.4322
+
+sqrt(-2345.676)
+
+ans =
+
+   0.0000 +48.4322i
+
+% Rational numbers
+% rat takes a floating-point number as input and returns
+% n and d are integer numbers such that x \approx n/d.
+x=0.353535;
+[n,d] = rat(x)
+
+n =
+
+       10086
+
+
+d =
+
+       28529
+
+% verify the result
+n/d
+
+ans =
+
+    0.3535
+
+[n,d]=rat(0.3333333333333)
+
+n =
+
+     1
+
+
+d =
+
+     3
+
+[n,d]=rat(0.3333)
+
+n =
+
+        3333
+
+
+d =
+
+       10000
+
+diary off
