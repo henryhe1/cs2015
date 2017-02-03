@@ -1,0 +1,92 @@
+x=[0:0.1:4]
+
+x =
+
+  Columns 1 through 5
+
+         0    0.1000    0.2000    0.3000    0.4000
+
+  Columns 6 through 10
+
+    0.5000    0.6000    0.7000    0.8000    0.9000
+
+  Columns 11 through 15
+
+    1.0000    1.1000    1.2000    1.3000    1.4000
+
+  Columns 16 through 20
+
+    1.5000    1.6000    1.7000    1.8000    1.9000
+
+  Columns 21 through 25
+
+    2.0000    2.1000    2.2000    2.3000    2.4000
+
+  Columns 26 through 30
+
+    2.5000    2.6000    2.7000    2.8000    2.9000
+
+  Columns 31 through 35
+
+    3.0000    3.1000    3.2000    3.3000    3.4000
+
+  Columns 36 through 40
+
+    3.5000    3.6000    3.7000    3.8000    3.9000
+
+  Column 41
+
+    4.0000
+
+plot(x, sqrt(x))
+title('square root')
+print(gcf, 'sqrt', '-djpeg')
+x=[-2:0.1:5];
+plot(x,exp(x))
+title('exponential function')
+print(gcf, 'exp', '-djpeg')
+x=[0.1:0.1:10];
+plot(x,log10(x))
+title('log10 function')
+print(gcf, 'log10', '-djpeg')
+plot(x,log2(x))
+title('log2 function')
+print(gcf, 'log2', '-djpeg')
+x=[-1:0.1:2];
+plot(x,10.^x)
+title('exponential base10')
+print(gcf, 'expbase10', '-djpeg')
+plot(x,2.^x)
+title('exponential base2')
+print(gcf, 'expbase2', '-djpeg')
+x=[-2*pi:pi/100:2*pi];
+plot(x,sin(x))
+title('sine')
+print(gcf, 'sine','-djpeg')
+plot(x,cos(x))
+title('cosine')
+print(gcf, 'cosine', '-djpeg')
+x=[-pi/2+0.01:0.01:pi/2-0.01];
+plot(x,tan(x))
+title('tangent')
+print(gcf,'tangent', '-djpeg')
+x=[[-0.8:0.01:-0.01],[0.01:0.01:0.8]];
+plot(x,cot(x))
+title('cotangent')
+print(gcf,'cotangent', '-djpeg')
+x=[-1:0.01:1];
+plot(x,asin(x))
+title('arcsine')
+print(gcf, 'arcsine', '-djpeg')
+plot(x,acos(x))
+title('arccosine')
+print(gcf,'arccosine', '-djpeg')
+x=[-10:0.01:10];
+plot(x,atan(x))
+title('arctangent')
+print(gcf,'arctangent', '-djpeg')
+x=[[-0.8:0.01:-0.01],[0.01:0.01:0.8]];
+plot(x,acot(x))
+title('arccotangent')
+print(gcf,'arccotangent', '-djpeg')
+diary off
