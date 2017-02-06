@@ -3,6 +3,8 @@ function [x, min_x1, max_x1, min_x2, max_x2] = generate_distribution(low_bound_x
 x = rand(num_x,1,'double');
 min_x1 = min(x);
 max_x1 = max(x);
+
+
 x = (x - min_x1) / (max_x1 - min_x1);
 min_x2 = min(x);
 max_x2 = max(x);
