@@ -77,7 +77,10 @@ fprintf('\n');
 
 % The difference of sums is not zero due to roundoff errors with the sum
 % and sort builtin functions, as x becomes larger. I would expect the
-% sorted sum to be more accurate.
+% sorted sum to be more accurate, because there should be less roundoff
+% error when adding small numbers to similarly small numbers, as opposed to
+% a regular sum where you could the addition of small numbers to large
+% numbers which would result in greater roundoff error.
 
 % Step 5: Relative zero
 
