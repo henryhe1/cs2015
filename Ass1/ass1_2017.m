@@ -90,10 +90,11 @@ a = 10000000; %relative zero for 1.0e64
 
 fprintf('%-14s %22d', 'a:', a);
 fprintf('\n%-14s %22d', 'b:', b);
+fprintf('\n%-14s %22d', 'a + b = ', a + b);
 
 % Checking equality
 if a + b == b
-    fprintf('\na + b = b. \nTherefore %d is a relative zero for %d.', a, b);
+    fprintf('\nTherefore %d is a relative zero for %d.', a, b);
 else
     fprintf('%d is NOT a relative zero for %d', a, b);
 end
