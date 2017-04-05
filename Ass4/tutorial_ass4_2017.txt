@@ -1,0 +1,136 @@
+----------------------------------
+>> a=[10 34   67  89 93 nan]
+a =
+    10    34    67    89    93   NaN
+>> b=[32  35  39 nan 45 nan]
+b =
+    32    35    39   NaN    45   NaN
+>> find(isnan(a))
+ans =
+     6
+>> find(~isnan(a))
+ans =
+     1     2     3     4     5
+>> find(~isnan(b))
+ans =
+     1     2     3     5
+>> c=find(~isnan(a) & ~isnan(b))
+c =
+     1     2     3     5
+>> a=a(c)
+a =
+    10    34    67    93
+>> b=b(c)
+b =
+    32    35    39    45
+----------------------------------
+Consider:
+
+climate is a 4D array, of size (2013-1941+1) * 12 * 7 *32 
+(2013-1941+1) is 73
+
+IF
+year=2000;
+month=2;
+element=3 % temperature
+THEN
+lastDay=climate(year,month,3,32)
+END
+
+is the last day of February 2000 (2000 is a leap year!).
+So lastDay is 29. (MatLab function leapyear(x) test if x is
+a leap year or not)
+
+So climate(year,month,3,1:lastDay) is a 4D array of size 
+1 * 1 * 1 * 29
+We need to eliminate dimensions of size 1 using squeeze:
+t=squeeze(climate(year,month,3,1:lastDay)) is a 1D vector 
+of 29 temperature values.
+
+Some values could be NaN (not a number).
+-isnan(t) returns logical vector with 0 for numbers not nan
+and 1 for numbers equal to nan.
+-we want values not equal to nan so we use ~isnan(t)
+to get a logical vector with 1's for all non-nan values
+and 0's for all nan values.
+
+t=t(~isnan(t))
+
+return a shorter t with no nans.
+
+Note we could also compute:
+c=find(~isnan(t)) and
+then t=t(c) and get the same not nan result.
+
+Finally:
+mean_temperature=mean(t)
+
+mean_temperature=mean(t(:)) will also work but
+is not necessary as t is already a 1D vector.
+
+----------------------------------
+Consider the following 1D arrays and correlation:
+
+a=[1 2 3 4 5 6 7];
+b=[1 2 3 4 5 6 7];
+c=[7 6 5 4 3 2 1];
+d=[1 1 1 1 1 1 1];
+e=[1 2 3 3 3 3 5];
+f=[5 4 4 4 4 2 1];
+
+pearson_correlation_coefficient(a,b)
+1
+pearson_correlation_coefficient(a,c)
+-1
+pearson_correlation_coefficient(a,d)
+0
+pearson_correlation_coefficient(c,d)
+0
+pearson_correlation_coefficient(a,e)
+0.8890
+pearson_correlation_coefficient(a,f)
+-0.8835
+----------------------------------
+Consider:
+
+year 50 is 1941+50=1991 (1941 is the base year for the climate data,
+i.e. data for 1941 is indicated by index 1)
+month 2 is February
+element 2 is precipitation
+element 3 is temperature
+
+t=climate(50,2,3,32) is 28 as 1991 is not a leap year
+
+% February 1991 rainfall
+r=squeeze(climate(50,2,2,1:climate(50,2,3,32)));
+% February 1991 temperature
+coords=find(t(~isnan(t) & ~isnan(r)))
+
+t=t(coords)
+r=r(coords)
+
+What is the size of array climate(50,2,3,1:climate(50,2,3,32))?
+1 * 1 * 1 * 28
+Use squeeze to remove dimensions of size 1
+t=squeeze(climate(50,2,3,1:climate(50,2,3,32)));
+
+% February's Pearson's correlation coefficient for
+% precipitation versus temperature
+pearson_correlation_coefficient(r,t) 
+
+This is a single correlation coefficient, you
+need 73*12 of them. lets say you have pcc(73,12) set
+with these values.
+
+[X,Y]=meshgrid(1:73,1:12);
+surf(X,Y,pcc)
+
+will make a 3D graph.
+
+Critical analysis: What happens at higher temperatures?
+What happens at normal (about 20 degree) temperatures?
+What happens at cold temperatures (about -10 degrees)?
+
+Remember precipitation includes rain and snow! 10 inches 
+of snow is counted as 1 inch of rain.
+----------------------------------
