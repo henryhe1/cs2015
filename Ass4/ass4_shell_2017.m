@@ -140,6 +140,9 @@ snow_on_ground=7;
 for year=year_index_1942:year_index_2013
     for month=1:12
 
+    assignin('base', 'month', month);
+    assignin('base', 'year', year);
+        
     % last day potentially different for each month
     last_day=climate(year,month,temperature,32);
 
@@ -151,44 +154,6 @@ for year=year_index_1942:year_index_2013
     precipitation_data(1:last_day) = squeeze(climate(year,month,precipitation,1:last_day));
     snowground_data(1:last_day) = squeeze(climate(year,month,snow_on_ground,1:last_day));
     
-    
-    % copy only non-nan corresponding data to same variable    
-%     temperature_data = temperature_data(~isnan(temperature_data) ...
-%         & ~isnan(rainfall) & ~isnan(snowfall) & ~isnan(precipitation) ...
-%         & ~isnan(snow_on_ground)); 
-%     rainfall_data = rainfall_data(~isnan(temperature_data) ...
-%         & ~isnan(rainfall_data) & ~isnan(snowfall_data) & ~isnan(precipitation_data) ...
-%         & ~isnan(snowground_data));
-%     snowfall_data = snowfall_data(~isnan(temperature_data) ...
-%         & ~isnan(rainfall_data) & ~isnan(snowfall_data) & ~isnan(precipitation_data) ...
-%         & ~isnan(snowground_data));
-%     precipitation_data = precipitation_data(~isnan(temperature_data) ...
-%         & ~isnan(rainfall_data) & ~isnan(snowfall_data) & ~isnan(precipitation_data) ...
-%         & ~isnan(snowground_data));
-%     snowground_data = snowground_data(~isnan(temperature_data) ...
-%         & ~isnan(rainfall_data) & ~isnan(snowfall_data) & ~isnan(precipitation_data) ...
-%         & ~isnan(snowground_data));
-%     
-
-
-%     % copy only non-nan corresponding data to same variable    
-%     temperature_data = temperature_data(~isnan(temperature_data) ...
-%         & ~isnan(rainfall_data) & ~isnan(snowfall_data) & ~isnan(precipitation_data) ...
-%         & ~isnan(snowground_data));
-%     rainfall_data = rainfall_data(~isnan(temperature_data) ...
-%         & ~isnan(rainfall_data) & ~isnan(snowfall_data) & ~isnan(precipitation_data) ...
-%         & ~isnan(snowground_data));
-%     snowfall_data = snowfall_data(~isnan(temperature_data) ...
-%         & ~isnan(rainfall_data) & ~isnan(snowfall_data) & ~isnan(precipitation_data) ...
-%         & ~isnan(snowground_data));
-%     precipitation_data = precipitation_data(~isnan(temperature_data) ...
-%         & ~isnan(rainfall_data) & ~isnan(snowfall_data) & ~isnan(precipitation_data) ...
-%         & ~isnan(snowground_data));
-%     snowground_data = snowground_data(~isnan(temperature_data) ...
-%         & ~isnan(rainfall_data) & ~isnan(snowfall_data) & ~isnan(precipitation_data) ...
-%         & ~isnan(snowground_data));
-
-
 
     temperature_data = temperature_data(~isnan(temperature_data));
     rainfall_data = rainfall_data(~isnan(rainfall_data));
@@ -204,26 +169,53 @@ for year=year_index_1942:year_index_2013
     snowground_monthly_mean_data(year-year_index_1942+1,month) = mean(snowground_data(:));
     
     
-    
-    
 %     SETUP ARRAYS x1 TO x6 AND y1 to y6 
 %     PREALLOCATE THE ARAYS AND ASSIGN VAUES
-
     
-
-
+    x1(1:last_day) = squeeze(climate(year,month,temperature,1:last_day));
+    y1(1:last_day) = squeeze(climate(year,month,precipitation,1:last_day));
+    
+    x3(1:last_day) = squeeze(climate(year,month,temperature,1:last_day));
+    y3(1:last_day) = squeeze(climate(year,month,snow_on_ground,1:last_day));
+    
+    x6(1:last_day) = squeeze(climate(year,month,snow_on_ground,1:last_day));
+    y6(1:last_day) = squeeze(climate(year,month,snowfall,1:last_day));
+    
 
 %     % position x data for all x and y arrays (even is no nan) 
 %     % to keep all the arrays the same length
 %     USE FIND TO COMPUTE THE COORDINATES OF CORRESPONDING NAN ARRAY
 %     ELEMENTS AND RESET x1 TO x6 AND y1 to y6
 % 
+
+      coords1=find(x1(~isnan(x1) & ~isnan(y1)));
+      x1 = x1(coords1);
+      y1 = y1(coords1);
+      
+      coords3=find(x3(~isnan(x3) & ~isnan(y3)));
+      x3 = x3(coords3);
+      y3 = y3(coords3);
+      
+      coords6=find(x6(~isnan(x6) & ~isnan(y6)));
+      x6 = x6(coords6);
+      y6 = y6(coords6);
+      
+
 %     coords=find( YOUR CONDITION HERE )
 % 
 %     % compute and save all average data for each month
 % 
 %     COMPUTE MEAN DATA FOR each month 1:12 AND year 1942:2013 AND SAVE
 % 
+
+%       x1_means(year-year_index_1942+1,month) = mean(x1);
+%       y1_means(year-year_index_1942+1,month) = mean(y1);
+
+
+      pcc1(year-year_index_1942+1,month) = pearson_correlation_coefficient(x1,y1);
+      pcc3(year-year_index_1942+1,month) = pearson_correlation_coefficient(x3,y3);
+      pcc6(year-year_index_1942+1,month) = pearson_correlation_coefficient(x6,y6);
+
 %     % compute and save all correlation data for each month
 % 
 %     COMPUTE PEARSON'S COLLELATION COEFFICIENT for (x1,y1), (x2,y2, (x3,y3),
@@ -298,8 +290,38 @@ figure
 
 
 
+% assignin('base', 'pcc1', pcc1)
+surf(X,Y,pcc1)
+% surf(X,Y,pcc2)
+title({'Pearson''s correlation coefficients', 'for temperature versus precipitation'}, 'Color', 'red', 'FontSize', 20);
+xlabel('Month', 'Color', 'red', 'FontSize', 15);
+ylabel('Year', 'Color', 'red', 'FontSize', 15);
+zlabel('Correlation', 'Color', 'red', 'FontSize', 15);
+colorbar
+shading interp
+figure
 
-surf(X,Y,r)
+surf(X,Y,pcc3)
+title({'Pearson''s correlation coefficients', 'for temperature versus snow on ground'}, 'Color', 'red', 'FontSize', 20);
+xlabel('Month', 'Color', 'red', 'FontSize', 15);
+ylabel('Year', 'Color', 'red', 'FontSize', 15);
+zlabel('Correlation', 'Color', 'red', 'FontSize', 15);
+colorbar
+shading interp
+figure
+
+surf(X,Y,pcc6)
+title({'Pearson''s correlation coefficients', 'for snow on ground versus snowfall'}, 'Color', 'red', 'FontSize', 20);
+xlabel('Month', 'Color', 'red', 'FontSize', 15);
+ylabel('Year', 'Color', 'red', 'FontSize', 15);
+zlabel('Correlation', 'Color', 'red', 'FontSize', 15);
+colorbar
+shading interp
+
+
+% surf(X,Y,pcc4)
+% surf(X,Y,pcc5)
+% surf(X,Y,pcc6)
 
 
 
