@@ -175,8 +175,17 @@ for year=year_index_1942:year_index_2013
     x1(1:last_day) = squeeze(climate(year,month,temperature,1:last_day));
     y1(1:last_day) = squeeze(climate(year,month,precipitation,1:last_day));
     
+    x2(1:last_day) = squeeze(climate(year,month,temperature,1:last_day));
+    y2(1:last_day) = squeeze(climate(year,month,snowfall,1:last_day));
+    
     x3(1:last_day) = squeeze(climate(year,month,temperature,1:last_day));
     y3(1:last_day) = squeeze(climate(year,month,snow_on_ground,1:last_day));
+    
+    x4(1:last_day) = squeeze(climate(year,month,precipitation,1:last_day));
+    y4(1:last_day) = squeeze(climate(year,month,snowfall,1:last_day));
+    
+    x5(1:last_day) = squeeze(climate(year,month,rainfall,1:last_day));
+    y5(1:last_day) = squeeze(climate(year,month,snowfall,1:last_day));
     
     x6(1:last_day) = squeeze(climate(year,month,snow_on_ground,1:last_day));
     y6(1:last_day) = squeeze(climate(year,month,snowfall,1:last_day));
@@ -192,9 +201,21 @@ for year=year_index_1942:year_index_2013
       x1 = x1(coords1);
       y1 = y1(coords1);
       
+      coords2=find(x2(~isnan(x2) & ~isnan(y2)));
+      x2 = x2(coords2);
+      y2 = y2(coords2);
+      
       coords3=find(x3(~isnan(x3) & ~isnan(y3)));
       x3 = x3(coords3);
       y3 = y3(coords3);
+      
+      coords4=find(x4(~isnan(x4) & ~isnan(y4)));
+      x4 = x4(coords4);
+      y4 = y4(coords4);
+      
+      coords5=find(x5(~isnan(x5) & ~isnan(y5)));
+      x5 = x5(coords5);
+      y5 = y5(coords5);
       
       coords6=find(x6(~isnan(x6) & ~isnan(y6)));
       x6 = x6(coords6);
@@ -211,9 +232,14 @@ for year=year_index_1942:year_index_2013
 %       x1_means(year-year_index_1942+1,month) = mean(x1);
 %       y1_means(year-year_index_1942+1,month) = mean(y1);
 
+%      x6 = mean(x6);
+%      y6 = mean(y6);
 
       pcc1(year-year_index_1942+1,month) = pearson_correlation_coefficient(x1,y1);
+      pcc2(year-year_index_1942+1,month) = pearson_correlation_coefficient(x2,y2);
       pcc3(year-year_index_1942+1,month) = pearson_correlation_coefficient(x3,y3);
+      pcc4(year-year_index_1942+1,month) = pearson_correlation_coefficient(x4,y4);
+      pcc5(year-year_index_1942+1,month) = pearson_correlation_coefficient(x5,y5);
       pcc6(year-year_index_1942+1,month) = pearson_correlation_coefficient(x6,y6);
 
 %     % compute and save all correlation data for each month
@@ -301,8 +327,36 @@ colorbar
 shading interp
 figure
 
+surf(X,Y,pcc2)
+title({'Pearson''s correlation coefficients', 'for temperature versus snowfall'}, 'Color', 'red', 'FontSize', 20);
+xlabel('Month', 'Color', 'red', 'FontSize', 15);
+ylabel('Year', 'Color', 'red', 'FontSize', 15);
+zlabel('Correlation', 'Color', 'red', 'FontSize', 15);
+colorbar
+shading interp
+figure
+
 surf(X,Y,pcc3)
 title({'Pearson''s correlation coefficients', 'for temperature versus snow on ground'}, 'Color', 'red', 'FontSize', 20);
+xlabel('Month', 'Color', 'red', 'FontSize', 15);
+ylabel('Year', 'Color', 'red', 'FontSize', 15);
+zlabel('Correlation', 'Color', 'red', 'FontSize', 15);
+colorbar
+shading interp
+figure
+
+surf(X,Y,pcc4)
+title({'Pearson''s correlation coefficients', 'for precipitation versus snowfall'}, 'Color', 'red', 'FontSize', 20);
+xlabel('Month', 'Color', 'red', 'FontSize', 15);
+ylabel('Year', 'Color', 'red', 'FontSize', 15);
+zlabel('Correlation', 'Color', 'red', 'FontSize', 15);
+colorbar
+shading interp
+figure
+
+
+surf(X,Y,pcc5)
+title({'Pearson''s correlation coefficients', 'for rainfall versus snowfall'}, 'Color', 'red', 'FontSize', 20);
 xlabel('Month', 'Color', 'red', 'FontSize', 15);
 ylabel('Year', 'Color', 'red', 'FontSize', 15);
 zlabel('Correlation', 'Color', 'red', 'FontSize', 15);
@@ -318,10 +372,6 @@ zlabel('Correlation', 'Color', 'red', 'FontSize', 15);
 colorbar
 shading interp
 
-
-% surf(X,Y,pcc4)
-% surf(X,Y,pcc5)
-% surf(X,Y,pcc6)
 
 
 
